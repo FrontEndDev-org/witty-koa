@@ -24,7 +24,6 @@ export class ImageToPptController {
    */
   @Post()
   async postXx(@Body('file') files: BodyFile[]): Promise<unknown> {
-    console.log(files);
     return { hello: 'world!' };
   }
 
@@ -38,7 +37,7 @@ export class ImageToPptController {
 }
 
 startServer({
-  port: 3000,
+  port: 3001,
   controllers: [new ImageToPptController()],
   middlewares: [responseMiddleWare(), bodyMiddleWare()],
 });
