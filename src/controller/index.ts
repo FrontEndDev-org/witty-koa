@@ -20,42 +20,44 @@ function getParams(
   params: RouterParam[] = [],
   context: Koa.Context & RouterParamContext
 ): unknown[] {
-  return params.map((param) => {
-    switch (param.type) {
-      case ParamType.PARAM:
-        if (param.param) {
-          return context.params[param.param];
-        }
-        return context.params;
-      case ParamType.QUERY:
-        if (param.param) {
-          return context.query[param.param];
-        }
-        return context.query;
-      case ParamType.HEADER:
-        if (param.param) {
-          return context.headers[param.param];
-        }
-        return context.headers;
-      case ParamType.BODY:
-        const { body = {}, files = [] } = context.request as unknown as {
-          body: Record<string, unknown>;
-          files: MulterFile[];
-        };
-        if (param.param) {
-          if (param.param in body) {
-            return body[param.param];
-          } else {
-            return files.filter((file) => file.fieldname === param.param);
+  return params
+    .sort((a, b) => a.index - b.index)
+    .map((param) => {
+      switch (param.type) {
+        case ParamType.PARAM:
+          if (param.param) {
+            return context.params[param.param];
           }
-        } else {
-          return {
-            ...body,
-            ...groupBy(files, (file) => file.fieldname),
+          return context.params;
+        case ParamType.QUERY:
+          if (param.param) {
+            return context.query[param.param];
+          }
+          return context.query;
+        case ParamType.HEADER:
+          if (param.param) {
+            return context.headers[param.param];
+          }
+          return context.headers;
+        case ParamType.BODY:
+          const { body = {}, files = [] } = context.request as unknown as {
+            body: Record<string, unknown>;
+            files: MulterFile[];
           };
-        }
-    }
-  });
+          if (param.param) {
+            if (param.param in body) {
+              return body[param.param];
+            } else {
+              return files.filter((file) => file.fieldname === param.param);
+            }
+          } else {
+            return {
+              ...body,
+              ...groupBy(files, (file) => file.fieldname),
+            };
+          }
+      }
+    });
 }
 
 export * from './decorators';

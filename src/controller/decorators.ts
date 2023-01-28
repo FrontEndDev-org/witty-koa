@@ -77,6 +77,7 @@ function commonParamGen(param: string, type: ParamType): ParameterDecorator {
     setRouterOptionMap(prototype, propertyKey as string, {
       params: [
         {
+          index: parameterIndex,
           param,
           type,
         },

@@ -14,6 +14,7 @@ export interface RouterOption {
 }
 
 export interface RouterParam {
+  index: number;
   type: ParamType;
   param: string;
 }
