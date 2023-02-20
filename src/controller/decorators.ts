@@ -97,3 +97,7 @@ export function Header(name = ''): ParameterDecorator {
 export function Query(name = ''): ParameterDecorator {
   return commonParamGen(name, ParamType.QUERY);
 }
+
+export function Mongodb(): ParameterDecorator {
+  return commonParamGen('', ParamType.MONGODB);
+}

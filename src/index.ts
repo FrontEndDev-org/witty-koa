@@ -3,6 +3,7 @@ import Router from '@koa/router';
 import Application from 'koa';
 import { setController } from './controller';
 import { ControllerInterface } from './controller/type';
+import { Db } from 'mongodb';
 
 export function startServer({ controllers, middlewares, port }: Props) {
   const app = new Koa();

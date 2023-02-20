@@ -56,6 +56,8 @@ function getParams(
               ...groupBy(files, (file) => file.fieldname),
             };
           }
+        case ParamType.MONGODB:
+          return context.mongodb;
       }
     });
 }

@@ -10,11 +10,20 @@ import {
   Query,
   Put,
   ResponseError,
-} from 'witty-koa';
+  mongodbWare,
+  Mongodb,
+  MongodbParam,
+} from '../../../src/index';
 @Controller('/hello')
 export class ImageToPptController {
   @Get('/world')
-  async getXx(@Query('a') a: string): Promise<unknown> {
+  async getXx(
+    @Query('a') a: string,
+    @Mongodb() mongodb: MongodbParam
+  ): Promise<unknown> {
+    const db = await mongodb.getDb();
+    const user = db.collection('user');
+    const array = await user.find().toArray();
     return { hello: 'world!' };
   }
 
@@ -39,5 +48,12 @@ export class ImageToPptController {
 startServer({
   port: 3001,
   controllers: [new ImageToPptController()],
-  middlewares: [responseMiddleWare(), bodyMiddleWare()],
+  middlewares: [
+    responseMiddleWare(),
+    bodyMiddleWare(),
+    mongodbWare({
+      url: 'xxx',
+      dbName: 'test',
+    }),
+  ],
 });
