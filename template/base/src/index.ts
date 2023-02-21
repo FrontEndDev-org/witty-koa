@@ -24,6 +24,7 @@ export class ImageToPptController {
     const db = await mongodb.getDb();
     const user = db.collection('user');
     const array = await user.find().toArray();
+    console.log(array);
     return { hello: 'world!' };
   }
 

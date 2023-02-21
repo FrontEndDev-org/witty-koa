@@ -5,6 +5,8 @@ import mongodb, {
   MongoClient,
   MongoClientOptions,
 } from 'mongodb';
+import { Method } from '../../controller/enum';
+
 // todo options
 interface Options {
   url: string;
@@ -35,8 +37,14 @@ export function mongodbWare({
             ...mongoClientOptions,
           });
           await client.connect();
-          session = client.startSession();
-          session!.startTransaction();
+          if (
+            [Method.PUT, Method.POST, Method.DELETE].includes(
+              context.method.toLowerCase() as Method
+            )
+          ) {
+            session = client.startSession();
+            session!.startTransaction();
+          }
         }
         // Database Name
         return client.db(dbName);
