@@ -10,7 +10,7 @@ import {
   Query,
   Put,
   ResponseError,
-  mongodbWare,
+  mongodbMiddleWare,
   Mongodb,
   MongodbParam,
 } from '../../../src/index';
@@ -52,7 +52,7 @@ startServer({
   middlewares: [
     responseMiddleWare(),
     bodyMiddleWare(),
-    mongodbWare({
+    mongodbMiddleWare({
       url: 'xxx',
       dbName: 'test',
     }),

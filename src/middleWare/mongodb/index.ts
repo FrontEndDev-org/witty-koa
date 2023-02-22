@@ -17,7 +17,7 @@ export interface MongodbParam {
   getDb(): Promise<Db>;
 }
 
-export function mongodbWare({
+export function mongodbMiddleWare({
   url,
   dbName,
   mongoClientOptions = {},
