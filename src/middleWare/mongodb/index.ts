@@ -27,7 +27,6 @@ export function mongodbMiddleWare({
   return async (context, next) => {
     let client: MongoClient;
     let session: ClientSession;
-    const defaultDbName = dbName;
     context.mongodb = {
       async getDb(dbName = defaultDbName) {
         if (!client) {
@@ -53,17 +52,18 @@ export function mongodbMiddleWare({
     try {
       const res = await next();
       if (session!) {
-        await session.commitTransaction();
-        await session.endSession();
+        await session!.commitTransaction();
       }
       return res;
     } catch (e) {
       if (session!) {
-        await session.abortTransaction();
-        await session.endSession();
+        await session!.abortTransaction();
       }
       throw e;
     } finally {
+      if (session!) {
+        await session!.endSession();
+      }
       if (client!) {
         await client.close();
       }
