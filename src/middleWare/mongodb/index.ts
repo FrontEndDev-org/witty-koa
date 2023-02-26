@@ -37,7 +37,7 @@ export function mongodbMiddleWare({
           });
           await client.connect();
           if (
-            [Method.PUT, Method.POST, Method.DELETE].includes(
+            [Method.PUT, Method.POST, Method.DELETE, Method.PATCH].includes(
               context.method.toLowerCase() as Method
             )
           ) {
