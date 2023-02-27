@@ -3,10 +3,11 @@ import Router from '@koa/router';
 import Application from 'koa';
 import { setController } from './controller';
 import { ControllerInterface } from './controller/type';
-import { Db } from 'mongodb';
 
 export function startServer({ controllers, middlewares, port }: Props) {
   const app = new Koa();
+  // cookies 依赖需要这个key,用于防止生成的 cookie 的 被串改 todo: 配置。
+  app.keys = ['123456', '123456'];
   const router = new Router();
   for (const middleware of middlewares) {
     app.use(middleware);

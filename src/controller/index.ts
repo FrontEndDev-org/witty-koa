@@ -18,7 +18,7 @@ export function setController(router: Router, controller: ControllerInterface) {
 
 function getParams(
   params: RouterParam[] = [],
-  context: Koa.Context & RouterParamContext
+  context: Koa.ParameterizedContext & RouterParamContext
 ): unknown[] {
   return params
     .sort((a, b) => a.index - b.index)
