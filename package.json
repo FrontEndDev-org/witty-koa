@@ -1,7 +1,7 @@
 {
   "name": "witty-koa",
   "type": "module",
-  "version": "0.0.28",
+  "version": "0.0.29",
   "description": "witty-koa",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,9 @@
     "build": "tsc",
     "release": "tsc && npm publish"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,12 +22,14 @@
     "@types/koa": "^2.13.5",
     "@types/koa__multer": "^2.0.4",
     "@types/koa__router": "^12.0.0",
+    "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-generic-session": "^2.2.1",
     "@types/lodash-es": "^4.17.6",
     "@types/multer": "^1.4.7",
     "@types/node": "^18.11.18",
     "ioredis": "^5.3.1",
     "koa": "^2.14.1",
+    "koa-bodyparser": "^4.4.0",
     "koa-generic-session": "^2.3.1",
     "lodash-es": "^4.17.21",
     "mongodb": "^5.0.1",

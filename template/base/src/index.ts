@@ -10,19 +10,17 @@ import {
   Query,
   Put,
   ResponseError,
-  mongodbMiddleWare,
-  Mongodb,
-  MongodbParam,
 } from '../../../src/index';
 import { sessionMiddleWare } from '../../../src/middleWare/session';
-import Koa, { Context } from 'koa';
+import { Context } from 'koa';
 @Controller('/hello')
 export class ImageToPptController {
   @Get('/world')
   async getXx(@Query('a') a: string, ctx: Context): Promise<unknown> {
-    const session = ctx.session as any;
+    const session = ctx.session as unknown as { count: number };
     session.count = session.count || 0;
     session.count++;
+    console.log(session.count);
     return { count: session.count };
   }
 
@@ -32,7 +30,13 @@ export class ImageToPptController {
    */
   @Post()
   async postXx(@Body('file') files: BodyFile[]): Promise<unknown> {
+    console.log(files);
     return { hello: 'world!' };
+  }
+  @Put()
+  async aa(@Body('a') a: string, @Body('b') b: BodyFile[]): Promise<unknown> {
+    console.log(b);
+    return { hello: a };
   }
 
   /**
@@ -45,7 +49,7 @@ export class ImageToPptController {
 }
 
 startServer({
-  port: 3001,
+  port: 3000,
   controllers: [new ImageToPptController()],
   middlewares: [
     sessionMiddleWare({

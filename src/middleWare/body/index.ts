@@ -1,14 +1,17 @@
-import Koa from 'koa';
+import Koa, { Next } from 'koa';
 import multer, { Options, File } from '@koa/multer';
 import { rm } from 'node:fs/promises';
-// todo options
+import bodyParser from 'koa-bodyparser';
 export function bodyMiddleWare(
   options: Options = { dest: 'uploads/' }
 ): Koa.Middleware {
   const upload = multer(options);
+  const bodyParser_ = bodyParser();
   return async (context, next) => {
     try {
-      return await upload.any()(context, next);
+      await bodyParser_(context, (() => undefined) as unknown as Next);
+      await upload.any()(context, (() => undefined) as unknown as Next);
+      return await next();
     } catch (e) {
       throw e;
     } finally {
