@@ -33,39 +33,39 @@ function setRouterOptionMap(
 }
 
 function commonMethodGen(path = '', method: Method): MethodDecorator {
-  return function (prototype: ControllerPrototype, propertyKey, descriptor) {
+  return (function (prototype: ControllerPrototype, propertyKey, descriptor): void {
     setRouterOptionMap(prototype, propertyKey as string, {
-      path: path,
+      path,
       method,
       cb: descriptor.value as (...args: unknown[]) => Promise<unknown>,
     });
-  } as MethodDecorator;
+  }) as MethodDecorator;
 }
 
-export function Get(path = ''): MethodDecorator {
+export function Get(path = ''): any {
   return commonMethodGen(path, Method.GET);
 }
 
-export function Post(path = ''): MethodDecorator {
+export function Post(path = ''): any {
   return commonMethodGen(path, Method.POST);
 }
 
-export function Put(path = ''): MethodDecorator {
+export function Put(path = ''): any {
   return commonMethodGen(path, Method.PUT);
 }
-export function Delete(path = ''): MethodDecorator {
+export function Delete(path = ''): any {
   return commonMethodGen(path, Method.DELETE);
 }
 
-export function Options(path = ''): MethodDecorator {
+export function Options(path = ''): any {
   return commonMethodGen(path, Method.OPTIONS);
 }
 
-export function Patch(path = ''): MethodDecorator {
+export function Patch(path = ''): any {
   return commonMethodGen(path, Method.PATCH);
 }
 
-export function Head(path = ''): MethodDecorator {
+export function Head(path = ''): any {
   return commonMethodGen(path, Method.HEAD);
 }
 
