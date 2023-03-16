@@ -4,8 +4,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
+    "module": "CommonJS",
     "esModuleInterop": true,
-    "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "declaration": true
