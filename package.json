@@ -1,13 +1,13 @@
 {
   "name": "witty-koa",
-  "type": "module",
-  "version": "0.0.29",
+  "type": "commonjs",
+  "version": "0.0.30",
   "description": "witty-koa",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "release": "tsc && npm publish"
+    "build": "tsc -p tsconfig.json",
+    "release": "npm run build && npm publish"
   },
   "files": [
     "dist"
