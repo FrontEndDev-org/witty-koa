@@ -3,15 +3,17 @@
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "declaration": true,
+    "declaration": true
   },
   "include": [
-    "src/**/*",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",

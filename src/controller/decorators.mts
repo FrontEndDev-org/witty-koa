@@ -1,5 +1,5 @@
-import { ControllerPrototype, RouterOption } from './type';
-import { Method, ParamType } from './enum';
+import { ControllerPrototype, RouterOption } from './type.mjs';
+import { Method, ParamType } from './enum.mjs';
 
 export function Controller(prefix = ''): ClassDecorator {
   return function (target) {
@@ -31,6 +31,7 @@ function setRouterOptionMap(
     Object.assign(prototype.routerOptionMap[name], option);
   }
 }
+
 function commonMethodGen(path = '', method: Method): MethodDecorator {
   return function (prototype: ControllerPrototype, propertyKey, descriptor) {
     setRouterOptionMap(prototype, propertyKey as string, {

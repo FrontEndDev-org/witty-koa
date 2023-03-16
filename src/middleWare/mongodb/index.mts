@@ -5,7 +5,7 @@ import mongodb, {
   MongoClient,
   MongoClientOptions,
 } from 'mongodb';
-import { Method } from '../../controller/enum';
+import { Method } from '../../controller/enum.mjs';
 
 // todo options
 interface Options {

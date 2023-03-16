@@ -1,7 +1,7 @@
 import Router, { RouterParamContext } from '@koa/router';
-import { ControllerInterface, ControllerPrototype, RouterParam } from './type';
+import { ControllerInterface, ControllerPrototype, RouterParam } from './type.mjs';
 import Koa from 'koa';
-import { ParamType } from './enum';
+import { ParamType } from './enum.mjs';
 import { File as MulterFile } from '@koa/multer';
 import { groupBy } from 'lodash-es';
 
@@ -62,4 +62,4 @@ function getParams(
     });
 }
 
-export * from './decorators';
+export * from './decorators.mjs';

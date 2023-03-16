@@ -10,8 +10,8 @@ import {
   Query,
   Put,
   ResponseError,
-} from '../../../src/index';
-import { sessionMiddleWare } from '../../../src/middleWare/session';
+} from '../../../src/index.mjs';
+import { sessionMiddleWare } from '../../../src/middleWare/session/index.mjs';
 import { Context } from 'koa';
 @Controller('/hello')
 export class ImageToPptController {

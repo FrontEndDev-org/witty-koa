@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import { ResponseError } from './Error';
+import { ResponseError } from './Error.mjs';
 // todo options
 export function responseMiddleWare({
   format,
@@ -34,4 +34,4 @@ export function responseMiddleWare({
     }
   };
 }
-export { ResponseError } from './Error';
+export { ResponseError } from './Error.mjs';

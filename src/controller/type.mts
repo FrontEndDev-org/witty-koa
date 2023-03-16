@@ -1,4 +1,4 @@
-import { Method, ParamType } from './enum';
+import { Method, ParamType } from './enum.mjs';
 
 export interface ControllerPrototype {
   prefix: string;

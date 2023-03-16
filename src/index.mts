@@ -1,8 +1,8 @@
 import Koa from 'koa';
 import Router from '@koa/router';
 import Application from 'koa';
-import { setController } from './controller';
-import { ControllerInterface } from './controller/type';
+import { setController } from './controller/index.mjs';
+import { ControllerInterface } from './controller/type.mjs';
 
 export function startServer({ controllers, middlewares, port }: Props) {
   const app = new Koa();
@@ -26,6 +26,6 @@ interface Props {
   port: number;
 }
 
-export * from './controller/index';
-export * from './middleWare/index';
+export * from './controller/index.mjs';
+export * from './middleWare/index.mjs';
 export { File as BodyFile } from '@koa/multer';
