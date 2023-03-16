@@ -1,6 +1,6 @@
 {
   "name": "witty-koa",
-  "type": "module",
+  "type": "commonjs",
   "version": "0.0.31",
   "description": "witty-koa",
   "main": "dist/index.js",

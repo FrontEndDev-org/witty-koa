@@ -49,7 +49,7 @@ export class ImageToPptController {
 }
 
 startServer({
-  port: 3000,
+  port: 3003,
   controllers: [new ImageToPptController()],
   middlewares: [
     sessionMiddleWare({

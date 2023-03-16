@@ -4,8 +4,6 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
-    "module": "esnext",
-    "target": "esnext",
     "esModuleInterop": true,
     "sourceMap": true,
     "outDir": "./dist",
