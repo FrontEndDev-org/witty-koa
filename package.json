@@ -1,12 +1,12 @@
 {
   "name": "witty-koa",
-  "type": "commonjs",
-  "version": "0.0.37",
+  "type": "module",
+  "version": "0.0.38",
   "description": "witty-koa",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "release": "npm run build && npm publish"
   },
   "files": [
