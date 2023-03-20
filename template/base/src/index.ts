@@ -29,8 +29,10 @@ export class ImageToPptController {
    * @param files
    */
   @Post()
-  async postXx(@Body('file') files: BodyFile[]): Promise<unknown> {
-    console.log(files);
+  async postXx(
+    @Body('file') files: BodyFile[],
+    @Body('a') a: string
+  ): Promise<unknown> {
     return { hello: 'world!' };
   }
   @Put()

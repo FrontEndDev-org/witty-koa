@@ -9,9 +9,12 @@ export function bodyMiddleWare(
   const bodyParser_ = bodyParser();
   return async (context, next) => {
     try {
-      await bodyParser_(context, (() => undefined) as unknown as Next);
-      await upload.any()(context, (() => undefined) as unknown as Next);
-      return await next();
+      if (context.request.is('multipart/form-data')) {
+        return await upload.any()(context, next);
+      } else {
+        await bodyParser_(context, (() => undefined) as unknown as Koa.Next);
+        return await next();
+      }
     } catch (e) {
       throw e;
     } finally {
