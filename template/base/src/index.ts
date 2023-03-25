@@ -51,14 +51,14 @@ export class ImageToPptController {
 }
 
 startServer({
-  port: 3003,
+  port: 3000,
   controllers: [new ImageToPptController()],
   middlewares: [
     sessionMiddleWare({
       redisOptions: {
-        host: '124.222.113.110',
+        host: '127.0.0.1',
         port: 6379,
-        password: '123456',
+        password: undefined,
         db: 0,
       },
     }),

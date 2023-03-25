@@ -13,7 +13,11 @@ export function startServer({ controllers, middlewares, port }: Props) {
     app.use(middleware);
   }
 
-  for (const controller of controllers) {
+  for (let controller of controllers) {
+    if(typeof controller === 'function') {
+      // @ts-ignore
+      controller = new controller()
+    }
     setController(router, controller as ControllerInterface);
   }
   app.use(router.routes());
