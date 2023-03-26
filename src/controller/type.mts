@@ -20,9 +20,26 @@ export interface RouterParam {
   validates?: Validate[];
 }
 export interface Validate {
-  required?: boolean;
+  type: ValidateType;
+  [ValidateType.REQUIRED]?: ValidateTypeDetail<boolean>;
+  [ValidateType.REG]?: ValidateTypeDetail<RegExp>;
+  [ValidateType.NUMBER]?: ValidateTypeDetail<ValidateNumberOptions>;
   message?: string;
-  reg?: RegExp;
+}
+
+export interface ValidateNumberOptions {
+  range: [number, number];
+}
+
+export enum ValidateType {
+  REQUIRED = 'required',
+  REG = 'reg',
+  NUMBER = 'number',
+}
+
+export interface ValidateTypeDetail<T> {
+  value?: T;
+  path?: string;
 }
 
 export interface ControllerInterface {

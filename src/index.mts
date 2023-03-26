@@ -14,9 +14,10 @@ export function startServer({ controllers, middlewares, port }: Props) {
   }
 
   for (let controller of controllers) {
-    if(typeof controller === 'function') {
+    if (typeof controller === 'function') {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      controller = new controller()
+      controller = new controller();
     }
     setController(router, controller as ControllerInterface);
   }

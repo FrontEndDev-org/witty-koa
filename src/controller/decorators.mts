@@ -1,4 +1,9 @@
-import { ControllerPrototype, RouterOption } from './type.mjs';
+import {
+  ControllerPrototype,
+  RouterOption,
+  ValidateNumberOptions,
+  ValidateType,
+} from './type.mjs';
 import { Method, ParamType } from './enum.mjs';
 
 export function Controller(prefix = ''): ClassDecorator {
@@ -33,7 +38,7 @@ function setRouterOptionMap(
         if (!find.validates || !param.validates) {
           Object.assign(find, param);
         } else {
-          find.validates.push(...param.validates);
+          find.validates.unshift(...param.validates);
         }
       } else {
         prototype.routerOptionMap[name].params!.push(param);
@@ -115,7 +120,10 @@ export function Query(name = ''): ParameterDecorator {
   return commonParamGen(name, ParamType.QUERY);
 }
 
-export function Required(message?: string): ParameterDecorator {
+export function ParamRequired(
+  path?: string,
+  message?: string
+): ParameterDecorator {
   return function (
     prototype: ControllerPrototype,
     propertyKey,
@@ -127,7 +135,11 @@ export function Required(message?: string): ParameterDecorator {
           index: parameterIndex,
           validates: [
             {
-              required: true,
+              type: ValidateType.REQUIRED,
+              [ValidateType.REQUIRED]: {
+                value: true,
+                path,
+              },
               message,
             },
           ],
@@ -137,7 +149,11 @@ export function Required(message?: string): ParameterDecorator {
   } as ParameterDecorator;
 }
 
-export function Reg(reg: RegExp, message?: string): ParameterDecorator {
+export function ParamReg(
+  reg: RegExp,
+  path?: string,
+  message?: string
+): ParameterDecorator {
   return function (
     prototype: ControllerPrototype,
     propertyKey,
@@ -149,7 +165,41 @@ export function Reg(reg: RegExp, message?: string): ParameterDecorator {
           index: parameterIndex,
           validates: [
             {
-              reg,
+              type: ValidateType.REG,
+              [ValidateType.REG]: {
+                value: reg,
+                path,
+              },
+              message,
+            },
+          ],
+        },
+      ],
+    });
+  } as ParameterDecorator;
+}
+
+export function ParamNumber(
+  path?: string,
+  options?: ValidateNumberOptions,
+  message?: string
+): ParameterDecorator {
+  return function (
+    prototype: ControllerPrototype,
+    propertyKey,
+    parameterIndex
+  ) {
+    setRouterOptionMap(prototype, propertyKey as string, {
+      params: [
+        {
+          index: parameterIndex,
+          validates: [
+            {
+              type: ValidateType.NUMBER,
+              [ValidateType.NUMBER]: {
+                value: options,
+                path,
+              },
               message,
             },
           ],
