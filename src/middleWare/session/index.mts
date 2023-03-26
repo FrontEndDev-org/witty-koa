@@ -10,7 +10,6 @@ export function sessionMiddleWare({
 }): Koa.Middleware {
   const client = new Redis(redisOptions);
   return session({
-    prefix: 'sess-',
     store: {
       async get(sid) {
         const res = await client.get(sid);
