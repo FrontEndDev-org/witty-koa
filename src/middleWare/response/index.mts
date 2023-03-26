@@ -1,5 +1,6 @@
 import Koa from 'koa';
 import { ResponseError, ResponseErrorCode } from './Error.mjs';
+import { Method } from '../../controller/enum.mjs';
 // todo options
 export function responseMiddleWare({
   format,
@@ -14,10 +15,12 @@ export function responseMiddleWare({
           context.body = format(value);
         }
       } else {
-        throw new ResponseError({
-          code: ResponseErrorCode.NOT_FOUND,
-          message: 'Not found!',
-        });
+        if (context.method.toLowerCase() === Method.GET) {
+          throw new ResponseError({
+            code: ResponseErrorCode.NOT_FOUND,
+            message: 'Not found!',
+          });
+        }
       }
     } catch (e) {
       if (e instanceof ResponseError) {
