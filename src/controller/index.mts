@@ -1,18 +1,70 @@
 import Router, { RouterParamContext } from '@koa/router';
-import { ControllerInterface, ControllerPrototype, RouterParam } from './type.mjs';
+import {
+  ControllerInterface,
+  ControllerPrototype,
+  RouterParam,
+  Validate,
+} from './type.mjs';
 import Koa from 'koa';
 import { ParamType } from './enum.mjs';
 import { File as MulterFile } from '@koa/multer';
-import { groupBy } from 'lodash-es';
+import { groupBy, method } from 'lodash-es';
+import { ResponseError } from '../middleWare/index.mjs';
 
 export function setController(router: Router, controller: ControllerInterface) {
   const { prefix, routerOptionMap }: ControllerPrototype =
     controller.constructor.prototype;
   for (const routerName in routerOptionMap) {
     const { method, path, cb, params } = routerOptionMap[routerName];
-    router[method!](prefix + path, (context) =>
-      cb!.call(controller, ...getParams(params, context), context)
-    );
+    router[method!](prefix + path, async (context) => {
+      const paramValues = getParams(params, context);
+      if (params) {
+        for (let i = 0; i < params!.length; i++) {
+          paramValidate(paramValues[i], params![i]);
+        }
+      }
+      return cb!.call(controller, ...paramValues, context);
+    });
+  }
+}
+
+function paramValidate(
+  value: unknown,
+  { validates, param, type }: RouterParam
+) {
+  if (!validates || !validates.length) {
+    return;
+  }
+  for (const validate of validates!) {
+    if (validate.required && (!value || !(value as unknown[]).length)) {
+      if (validate.message) {
+        throw new ResponseError({
+          code: 0,
+          message: `${type} parameter error: ${validate.message}`,
+        });
+      } else {
+        throw new ResponseError({
+          code: 0,
+          message: `${type} parameter error: ${param} is required`,
+        });
+      }
+    }
+    if (
+      validate.reg &&
+      (typeof value !== 'string' || !validate.reg.test(value as string))
+    ) {
+      if (validate.message) {
+        throw new ResponseError({
+          code: 0,
+          message: `${type} parameter error: ${validate.message}`,
+        });
+      } else {
+        throw new ResponseError({
+          code: 0,
+          message: `${type} parameter error: ${param} is not legal`,
+        });
+      }
+    }
   }
 }
 

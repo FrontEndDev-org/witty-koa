@@ -10,18 +10,23 @@ import {
   Query,
   Put,
   ResponseError,
+  Required,
+  Reg,
 } from '../../../src/index.mjs';
 import { sessionMiddleWare } from '../../../src/middleWare/session/index.mjs';
 import { Context } from 'koa';
 @Controller('/hello')
 export class ImageToPptController {
-  @Get('/world')
-  async getXx(@Query('a') a: string, ctx: Context): Promise<unknown> {
+  @Get()
+  async getXx(
+    @Query('a') @Required('123') @Reg(/^\d*$/) a: string,
+    ctx: Context
+  ): Promise<unknown> {
     const session = ctx.session as unknown as { count: number };
     session.count = session.count || 0;
     session.count++;
     console.log(session.count);
-    return { count: session.count };
+    return { count: session.count, a };
   }
 
   /**

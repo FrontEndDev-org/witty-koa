@@ -25,21 +25,37 @@ function setRouterOptionMap(
     if (!prototype.routerOptionMap[name].params) {
       prototype.routerOptionMap[name].params = [];
     }
-    option.params = prototype.routerOptionMap[name].params!.concat(
-      option.params
-    );
+    for (const param of option.params) {
+      const find = prototype.routerOptionMap[name].params!.find(
+        (one) => one.index === param.index
+      );
+      if (find) {
+        if (!find.validates || !param.validates) {
+          Object.assign(find, param);
+        } else {
+          find.validates.push(...param.validates);
+        }
+      } else {
+        prototype.routerOptionMap[name].params!.push(param);
+      }
+    }
+    option.params = prototype.routerOptionMap[name].params;
     Object.assign(prototype.routerOptionMap[name], option);
   }
 }
 
 function commonMethodGen(path = '', method: Method): MethodDecorator {
-  return (function (prototype: ControllerPrototype, propertyKey, descriptor): void {
+  return function (
+    prototype: ControllerPrototype,
+    propertyKey,
+    descriptor
+  ): void {
     setRouterOptionMap(prototype, propertyKey as string, {
       path,
       method,
       cb: descriptor.value as (...args: unknown[]) => Promise<unknown>,
     });
-  }) as MethodDecorator;
+  } as MethodDecorator;
 }
 
 export function Get(path = ''): any {
@@ -97,6 +113,50 @@ export function Header(name = ''): ParameterDecorator {
 }
 export function Query(name = ''): ParameterDecorator {
   return commonParamGen(name, ParamType.QUERY);
+}
+
+export function Required(message?: string): ParameterDecorator {
+  return function (
+    prototype: ControllerPrototype,
+    propertyKey,
+    parameterIndex
+  ) {
+    setRouterOptionMap(prototype, propertyKey as string, {
+      params: [
+        {
+          index: parameterIndex,
+          validates: [
+            {
+              required: true,
+              message,
+            },
+          ],
+        },
+      ],
+    });
+  } as ParameterDecorator;
+}
+
+export function Reg(reg: RegExp, message?: string): ParameterDecorator {
+  return function (
+    prototype: ControllerPrototype,
+    propertyKey,
+    parameterIndex
+  ) {
+    setRouterOptionMap(prototype, propertyKey as string, {
+      params: [
+        {
+          index: parameterIndex,
+          validates: [
+            {
+              reg,
+              message,
+            },
+          ],
+        },
+      ],
+    });
+  } as ParameterDecorator;
 }
 
 export function Mongodb(): ParameterDecorator {

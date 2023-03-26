@@ -15,8 +15,14 @@ export interface RouterOption {
 
 export interface RouterParam {
   index: number;
-  type: ParamType;
-  param: string;
+  type?: ParamType;
+  param?: string;
+  validates?: Validate[];
+}
+export interface Validate {
+  required?: boolean;
+  message?: string;
+  reg?: RegExp;
 }
 
 export interface ControllerInterface {
