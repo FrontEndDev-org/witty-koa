@@ -10,6 +10,7 @@ import { ParamType } from './enum.mjs';
 import { File as MulterFile } from '@koa/multer';
 import { groupBy, method } from 'lodash-es';
 import { ResponseError } from '../middleWare/index.mjs';
+import { ResponseErrorCode } from '../middleWare/response/Error.mjs';
 
 export function setController(router: Router, controller: ControllerInterface) {
   const { prefix, routerOptionMap }: ControllerPrototype =
@@ -39,12 +40,12 @@ function paramValidate(
     if (validate.required && (!value || !(value as unknown[]).length)) {
       if (validate.message) {
         throw new ResponseError({
-          code: 0,
+          code: ResponseErrorCode.PARAM,
           message: `${type} parameter error: ${validate.message}`,
         });
       } else {
         throw new ResponseError({
-          code: 0,
+          code: ResponseErrorCode.PARAM,
           message: `${type} parameter error: ${param} is required`,
         });
       }
@@ -55,12 +56,12 @@ function paramValidate(
     ) {
       if (validate.message) {
         throw new ResponseError({
-          code: 0,
+          code: ResponseErrorCode.PARAM,
           message: `${type} parameter error: ${validate.message}`,
         });
       } else {
         throw new ResponseError({
-          code: 0,
+          code: ResponseErrorCode.PARAM,
           message: `${type} parameter error: ${param} is not legal`,
         });
       }

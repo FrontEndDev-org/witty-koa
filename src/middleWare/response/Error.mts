@@ -15,3 +15,8 @@ export interface ErrorResponseData {
   message: string;
   status?: number;
 }
+
+export enum ResponseErrorCode {
+  PARAM,
+  NOT_FOUND,
+}
