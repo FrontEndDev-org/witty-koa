@@ -8,6 +8,9 @@ export function sessionMiddleWare({
 }: {
   redisOptions: RedisOptions;
 }): Koa.Middleware {
+  if (redisOptions.db === undefined) {
+    redisOptions.db = 0;
+  }
   const client = new Redis(redisOptions);
   return session({
     store: {
