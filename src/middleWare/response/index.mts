@@ -19,6 +19,7 @@ export function responseMiddleWare({
           throw new ResponseError({
             error: ResponseErrorType.NOT_FOUND,
             error_description: 'Not found!',
+            iss: context.myOptions?.iss,
           });
         }
       }
@@ -26,6 +27,7 @@ export function responseMiddleWare({
       if (e instanceof ResponseError) {
         context.response.status = e.data.status!;
         delete e.data.status;
+        e.data.iss = context.myOptions?.iss;
         if (context.query?.state) {
           e.data.state = context.query?.state as string;
         }
@@ -35,6 +37,7 @@ export function responseMiddleWare({
         context.body = {
           error: ResponseErrorType.SERVER_ERROR,
           error_description: e.message,
+          iss: context.myOptions?.iss,
           stack: e.stack,
         };
       } else {
