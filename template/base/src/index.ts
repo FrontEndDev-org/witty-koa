@@ -52,7 +52,7 @@ export class ImageToPptController {
    */
   @Get('/error')
   async xx(): Promise<unknown> {
-    throw new ResponseError({ code: 0, message: '错误!' });
+    throw new ResponseError({ error: '0', error_description: '错误!' });
   }
 }
 

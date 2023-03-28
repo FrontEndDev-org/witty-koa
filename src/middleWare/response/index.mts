@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import { ResponseError, ResponseErrorCode } from './Error.mjs';
+import { ResponseError, ResponseErrorType } from './Error.mjs';
 import { Method } from '../../controller/enum.mjs';
 // todo options
 export function responseMiddleWare({
@@ -17,22 +17,23 @@ export function responseMiddleWare({
       } else {
         if (context.method.toLowerCase() === Method.GET) {
           throw new ResponseError({
-            code: ResponseErrorCode.NOT_FOUND,
-            message: 'Not found!',
+            error: ResponseErrorType.NOT_FOUND,
+            error_description: 'Not found!',
           });
         }
       }
     } catch (e) {
       if (e instanceof ResponseError) {
         context.response.status = e.data.status!;
-        context.body = {
-          code: e.data.code,
-          message: e.data.message,
-        };
+        delete e.data.status;
+        if (context.query?.state) {
+          e.data.state = context.query?.state as string;
+        }
+        context.body = e.data;
       } else if (e instanceof Error) {
         context.response.status = 500;
         context.body = {
-          message: e.message,
+          error: e.message,
           stack: e.stack,
         };
       } else {
