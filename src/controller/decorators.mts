@@ -208,6 +208,13 @@ export function ParamNumber(
     });
   } as ParameterDecorator;
 }
+export function Session(key = ''): ParameterDecorator {
+  return commonParamGen(key, ParamType.SESSION);
+}
+
+export function UserInfo(): ParameterDecorator {
+  return commonParamGen('userInfo', ParamType.SESSION);
+}
 
 export function Mongodb(): ParameterDecorator {
   return commonParamGen('', ParamType.MONGODB);

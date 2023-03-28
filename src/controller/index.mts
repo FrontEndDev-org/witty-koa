@@ -67,6 +67,12 @@ function getParams(
               ...groupBy(files, (file) => file.fieldname),
             };
           }
+        case ParamType.SESSION:
+          if (param.param) {
+            return context.session[param.param];
+          } else {
+            return context.session;
+          }
         case ParamType.MONGODB:
           return context.mongodb;
       }
