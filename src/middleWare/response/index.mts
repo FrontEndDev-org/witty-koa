@@ -33,7 +33,8 @@ export function responseMiddleWare({
       } else if (e instanceof Error) {
         context.response.status = 500;
         context.body = {
-          error: e.message,
+          error: ResponseErrorType.SERVER_ERROR,
+          error_description: e.message,
           stack: e.stack,
         };
       } else {

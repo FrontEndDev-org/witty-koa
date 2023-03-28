@@ -43,4 +43,5 @@ export enum ResponseErrorType {
    */
   INVALID_REQUEST = 'invalid_request',
   NOT_FOUND = 'not_found',
+  SERVER_ERROR = 'server_error',
 }
