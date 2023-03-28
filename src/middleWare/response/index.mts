@@ -15,6 +15,9 @@ export function responseMiddleWare({
           context.body = format(value);
         }
       } else {
+        if (context.status === 302 || context.status === 301) {
+          return;
+        }
         if (context.method.toLowerCase() === Method.GET) {
           throw new ResponseError({
             error: ResponseErrorType.NOT_FOUND,
