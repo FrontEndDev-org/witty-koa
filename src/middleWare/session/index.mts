@@ -8,7 +8,7 @@ export function sessionMiddleWare({
   sessionOptions = {} as SessionOptions,
 }: {
   redisOptions: RedisOptions;
-  sessionOptions: SessionOptions;
+  sessionOptions?: SessionOptions;
 }): Koa.Middleware {
   if (redisOptions.db === undefined) {
     redisOptions.db = 0;
