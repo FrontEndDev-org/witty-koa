@@ -1,18 +1,24 @@
-import session from 'koa-generic-session';
+import session, { SessionOptions } from 'koa-generic-session';
 import Redis, { RedisOptions } from 'ioredis';
 import Koa from 'koa';
 
 // todo options
 export function sessionMiddleWare({
   redisOptions,
+  sessionOptions = {} as SessionOptions,
 }: {
   redisOptions: RedisOptions;
+  sessionOptions: SessionOptions;
 }): Koa.Middleware {
   if (redisOptions.db === undefined) {
     redisOptions.db = 0;
   }
   const client = new Redis(redisOptions);
   return session({
+    // cookie 的 key
+    key: 'sid',
+    // redis 数据库的前缀
+    prefix: 'sid:',
     store: {
       async get(sid) {
         const res = await client.get(sid);
@@ -33,5 +39,6 @@ export function sessionMiddleWare({
         await client.del(sid);
       },
     },
+    ...sessionOptions,
   });
 }

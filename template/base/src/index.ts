@@ -24,6 +24,7 @@ export class ImageToPptController {
     ctx: Context
   ): Promise<unknown> {
     const session = ctx.session as unknown as { count: number };
+    ctx.cookies.set('a', '1', { httpOnly: false });
     session.count = session.count || 0;
     session.count++;
     console.log(session.count);
