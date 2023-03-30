@@ -110,7 +110,6 @@ export function paramValidate(
               error_description: `${type} parameter error: ${validate.message}`,
             });
           } else {
-            console.log(1, param, 2, path, 3, type);
             throw new ResponseError({
               error: ResponseErrorType.INVALID_REQUEST,
               error_description: `${type} parameter error: value should be a legal number value, key: ${

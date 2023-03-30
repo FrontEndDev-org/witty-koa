@@ -62,12 +62,12 @@ startServer({
   controllers: [new ImageToPptController()],
   middlewares: [
     sessionMiddleWare({
-      redisOptions: {
-        host: '127.0.0.1',
-        port: 6379,
-        password: undefined,
-        db: 0,
-      },
+      // redisOptions: {
+      //   host: '127.0.0.1',
+      //   port: 6379,
+      //   password: undefined,
+      //   db: 0,
+      // },
     }),
     responseMiddleWare(),
     bodyMiddleWare(),
