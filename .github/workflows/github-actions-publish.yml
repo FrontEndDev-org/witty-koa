@@ -1,14 +1,31 @@
 name: publish
-on: push
+on:
+  push:
+    branches:
+      - master
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+    steps:
+      - uses: google-github-actions/release-please-action@v3
+        id: release
+        with:
+          release-type: node
+          bump-minor-pre-major: true
   publish:
     runs-on: ubuntu-latest
+    if: needs.release.outputs.release_created
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 19
-      - run: npm install
+      - run: npm ci
       - run: npm run build
       - uses: JS-DevTools/npm-publish@v1
         with:
