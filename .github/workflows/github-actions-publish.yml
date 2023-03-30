@@ -17,6 +17,7 @@ jobs:
         id: release
         with:
           release-type: node
+          release-as: 0.2.1
           bump-minor-pre-major: true
   publish:
     runs-on: ubuntu-latest
