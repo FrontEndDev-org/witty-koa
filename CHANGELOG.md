@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/FrontEndDev-org/witty-koa/compare/v0.1.0...v0.2.0) (2023-03-30)
+
+
+### Features
+
+* github action修改 ([ab220b4](https://github.com/FrontEndDev-org/witty-koa/commit/ab220b463bc37a18709c6b995795bc351eee274b))
+
 ## 0.1.0 (2023-03-30)
 
 
