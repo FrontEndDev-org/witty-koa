@@ -1,5 +1,6 @@
 import {
   ControllerPrototype,
+  DataClassPrototype,
   RouterOption,
   ValidateNumberOptions,
   ValidateType,
@@ -39,6 +40,7 @@ function setRouterOptionMap(
           Object.assign(find, param);
         } else {
           find.validates.unshift(...param.validates);
+          Object.assign(find, { ...param, validates: find.validates });
         }
       } else {
         prototype.routerOptionMap[name].params!.push(param);
@@ -120,10 +122,7 @@ export function Query(name = ''): ParameterDecorator {
   return commonParamGen(name, ParamType.QUERY);
 }
 
-export function ParamRequired(
-  path?: string,
-  message?: string
-): ParameterDecorator {
+export function Required(path?: string, message?: string): ParameterDecorator {
   return function (
     prototype: ControllerPrototype,
     propertyKey,
@@ -149,7 +148,7 @@ export function ParamRequired(
   } as ParameterDecorator;
 }
 
-export function ParamReg(
+export function Reg(
   reg: RegExp,
   path?: string,
   message?: string
@@ -179,7 +178,7 @@ export function ParamReg(
   } as ParameterDecorator;
 }
 
-export function ParamNumber(
+export function IsNumber(
   path?: string,
   options?: ValidateNumberOptions,
   message?: string
@@ -218,4 +217,39 @@ export function UserInfo(): ParameterDecorator {
 
 export function Mongodb(): ParameterDecorator {
   return commonParamGen('', ParamType.MONGODB);
+}
+
+export function Type(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  c: Function,
+  isArray?: boolean
+): ParameterDecorator & PropertyDecorator {
+  return function (prototype, propertyKey, parameterIndex) {
+    // 参数上面
+    if (parameterIndex !== undefined) {
+      const prototype_ = prototype as ControllerPrototype;
+      setRouterOptionMap(prototype_, propertyKey as string, {
+        params: [
+          {
+            index: parameterIndex,
+            dataType: c,
+          },
+        ],
+      });
+    }
+    // 属性上面
+    else {
+      const prototype_ = prototype as DataClassPrototype;
+      if (!prototype_.__isDataClass) {
+        prototype_.__isDataClass = true;
+      }
+      if (prototype_.props) {
+        prototype_.props = [];
+      }
+      prototype_.props.push({
+        isArray,
+        dataType: c,
+      });
+    }
+  } as ParameterDecorator & PropertyDecorator;
 }

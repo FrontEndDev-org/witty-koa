@@ -16,6 +16,8 @@ export interface RouterOption {
 export interface RouterParam {
   index: number;
   type?: ParamType;
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  dataType?: Function;
   param?: string;
   validates?: Validate[];
 }
@@ -44,4 +46,13 @@ export interface ValidateTypeDetail<T> {
 
 export interface ControllerInterface {
   [name: string]: (...args: unknown[]) => Promise<unknown>;
+}
+
+export interface DataClassPrototype {
+  __isDataClass: boolean;
+  props: {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    dataType: Function;
+    isArray?: boolean;
+  }[];
 }

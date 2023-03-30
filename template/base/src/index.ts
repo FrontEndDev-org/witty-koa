@@ -10,9 +10,9 @@ import {
   Query,
   Put,
   ResponseError,
-  ParamRequired,
-  ParamReg,
-  ParamNumber,
+  Required,
+  Reg,
+  IsNumber,
 } from '../../../src/index.mjs';
 import { sessionMiddleWare } from '../../../src/middleWare/session/index.mjs';
 import { Context } from 'koa';
@@ -20,7 +20,7 @@ import { Context } from 'koa';
 export class ImageToPptController {
   @Post()
   async get(
-    @Body() @ParamRequired() @ParamNumber('a', { range: [1, 10] }) a: string,
+    @Body() @Required() @IsNumber('a', { range: [1, 10] }) a: string,
     ctx: Context
   ): Promise<unknown> {
     const session = ctx.session as unknown as { count: number };
