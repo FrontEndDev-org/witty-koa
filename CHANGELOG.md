@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/FrontEndDev-org/witty-koa/compare/v0.3.0...v0.4.0) (2023-04-01)
+
+
+### Features
+
+* **sessionMiddleWare:** 没有redisOptions用内存维护,通过ignorePath过滤掉一些不需要session的请求。 ([8ee1e04](https://github.com/FrontEndDev-org/witty-koa/commit/8ee1e04f30cb314c62a5351aa50f4efedbbd39a8))
+* **sessionMiddleWare:** 没有redisOptions用内存维护,通过ignorePath过滤掉一些不需要session的请求。 ([9c5d88c](https://github.com/FrontEndDev-org/witty-koa/commit/9c5d88c21994b2a38abd1da40615975cd0f66f22))
+
 ## [0.3.0](https://github.com/FrontEndDev-org/witty-koa/compare/v0.2.1...v0.3.0) (2023-03-30)
 
 
