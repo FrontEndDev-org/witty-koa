@@ -1,7 +1,7 @@
 {
   "name": "witty-koa",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "witty-koa",
   "main": "dist/index.mjs",
   "types": "dist/index.d.mts",
